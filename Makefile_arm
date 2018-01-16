@@ -1,0 +1,16 @@
+# make -f Makefile_arm ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+
+#export ARCH := arm
+#export CROSS_COMPILE := arm-linux-gnueabihf-
+
+obj-m := hello_printk.o 
+#KDIR := /lib/modules/$(shell uname -r)/build
+KDIR := /home/richard/WM8880/OrgPackage/ANDROID_3.4.5
+#KDIR := /home/richard/WM8880/linux/ANDROID_3.4.5
+PWD   := $(shell pwd)
+
+default:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+clean:
+	$(MAKE) -C $(KDIR) M=$(PWD) clean
+
