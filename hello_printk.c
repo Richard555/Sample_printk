@@ -47,7 +47,7 @@ hello_init(void)
 {
 	
 	printk("Hello, world!\n");
-	test_atomic();
+//	test_atomic();
 	return 0;
 }
 
