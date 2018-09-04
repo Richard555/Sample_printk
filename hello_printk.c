@@ -1,7 +1,7 @@
 /*
  * "Hello, world!" minimal kernel module
  *
- * Gaspard
+ * Richard
  *
  */
 
@@ -13,6 +13,29 @@
 #include <linux/init.h>
 #include <linux/module.h>
 
+
+void test_atomic (void)
+{
+	atomic_t at;
+	int ret;
+	
+	atomic_set(&at, 5);
+	printk(KERN_ALERT "at.counter = %d\n", atomic_read(&at));
+	atomic_dec(&at);
+	printk(KERN_ALERT "after atomic_dec(&at). at.counter = %d\n", atomic_read(&at));
+	
+	//testing 4 + 1
+	atomic_set(&at, 4);
+	ret = atomic_inc_unless_negative(&at);
+	printk(" For    4+1 at = %x, ret =%d \n", at.counter, ret);
+
+	//testing -8 + 1
+	atomic_set(&at, -8);
+	ret = atomic_inc_unless_negative(&at);
+	printk(" For (-8)+1 at = %x, ret=%d \n", at.counter, ret);
+}
+
+
 /*
  * This is the init function, which is run when the module is first
  * loaded.  The __init keyword tells the kernel that this code will
@@ -22,7 +45,9 @@
 static int __init
 hello_init(void)
 {
+	
 	printk("Hello, world!\n");
+	test_atomic();
 	return 0;
 }
 
@@ -58,6 +83,6 @@ module_exit(hello_exit);
  * provide the source code if you ship a binary version of the module.
  */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Gaspard");
+MODULE_AUTHOR("Richard");
 MODULE_DESCRIPTION("\"Hello, world!\" minimal module");
 MODULE_VERSION("printk");
